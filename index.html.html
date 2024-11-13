@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highly Secure Personal Locker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: green;
+            text-align: center;
+        }
+
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .step {
+            margin: 20px;
+            padding: 30px;
+            background-color: gold;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .step img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .step img:hover {
+            transform: scale(5); /* Zoom in effect */
+        }
+
+        .step.success {
+            background-color: #d4edda;
+        }
+
+        .step.error {
+            background-color: red;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            color: #0044cc;
+        }
+
+        .step input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 19px;
+            border: 3px solid blue;
+        }
+
+        button {
+            background-color: #0044cc;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0033aa;
+        }
+
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .instructions {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .voice-input {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .step-container {
+            margin-top: 20px;
+        }
+/* start header text blinking */
+@keyframes blink {
+            0% { color: rgb(255, 0, 0); }
+            10% { color: rgb(255, 128, 0); }
+            20% { color: rgb(255, 255, 0); }
+            30% { color: rgb(0, 255, 0); }
+            40% { color: rgb(0, 128, 255); }
+            50% { color: rgb(0, 0, 255); }
+            60% { color: rgb(128, 0, 255); }
+            70% { color: rgb(255, 0, 255); }
+            80% { color: rgb(255, 255, 255); }
+            90% { color: rgb(128, 128, 128); }
+            100% { color: rgb(255, 0, 0); }
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 36px;
+            animation: blink 9s infinite; /* 3s duration, infinite loop */
+        }
+/* the end header text blinking */
+
+
+/* start footer */
+
+ /* Footer Styling */
+ .footer {
+                background-color: #282c34;
+                color: #e1e1e1;
+                width: 100%;
+                padding: 3rem 0;
+                font-family: 'Arial', sans-serif;
+            }
+
+            .footer .heading {
+                color: #ffeb3b;
+                text-transform: uppercase;
+                margin: 0 auto;
+                margin-bottom: 3rem;
+                text-align: center;
+                animation: bounceIn 20s ease-in-out;
+            }
+
+            .footer .content {
+                display: flex;
+                justify-content: space-around;
+                margin: 1.5rem;
+                flex-wrap: wrap;
+                animation: fadeInUp 15s ease-in-out;
+            }
+
+            .footer .content div {
+                border: 3px solid;
+                border-image: linear-gradient(45deg, #ff5722, #03a9f4, #4caf50, #f44336);
+                border-image-slice: 1;
+                border-radius: 12px;
+                padding: 7px;
+                margin: 0.5rem;
+                width: 22%;
+                background-color: #3c3f41;
+                color: yellow;
+            }
+
+            .footer .content p {
+                margin-bottom: 1rem;
+            }
+
+            .footer .content a {
+                text-decoration: none;
+                color: yellow;
+                transition: color 9s ease-in-out, text-shadow 0.3s ease-in-out;
+            }
+
+            .footer .content a:hover {
+                color: #ff5722;
+                text-shadow: 1px 1px 2px rgba(255, 87, 34, 0.6);
+            }
+
+            .footer .content h4 {
+                margin-bottom: 1rem;
+                font-size: 22px;
+                color: #ffeb3b;
+            }
+
+            footer {
+                text-align: center;
+                margin: 2rem auto;
+                border-top: 3px solid #ff5722;
+                padding-top: 1rem;
+            }
+
+            footer hr {
+                margin: 2rem 0;
+                border: 0;
+                border-top: 2px dashed #ff5722;
+            }
+
+            .footer-text {
+                font-size: 21px;
+                color: #e1e1e1;
+                animation: textAnimation 25s infinite;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 767px) {
+                .navbar {
+                    flex-direction: column;
+                }
+
+                .footer .content {
+                    display: block;
+                }
+
+                .footer .content div {
+                    width: 100%;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            @media (min-width: 768px) and (max-width: 1024px) {
+                .footer .content div {
+                    width: 48%;
+                }
+            }
+
+            /* Animations */
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes bounceIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.3);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes textAnimation {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    color: #ff5722;
+                }
+
+                25% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    color: #03a9f4;
+                }
+
+                50% {
+                    opacity: 0.8;
+                    color: #4caf50;
+                }
+
+                75% {
+                    opacity: 1;
+                    color: #f44336;
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+            }
+
+            .footer-text {
+                font-size: 21px;
+                color: #e1e1e1;
+                animation: textAnimation 5s infinite;
+                display: inline-block;
+            }
+
+             /* Footer Section */
+        .footer {
+            background-color: #2F4F4F;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+
+
+            /* the end footer */
+
+/* the end footer */
+</style>
+</head>
+<body>
+
+<header><header>
+    <h1>Miss Snehitha Chowdeykari's father's digital Highly Secure Personal Locker.</h1>
+</header>
+
+<div class="container">
+    <div id="step1" class="step">
+        <h3>Step 1: Fingerprint Recognition</h3>
+        <img src="./assests/finger_print.gif" alt="Fingerprint Animation" class="animation-img">
+        <button onclick="completeStep('step1')">Complete Step 1</button>
+    </div>
+
+    <div id="step2" class="step">
+        <h3>Step 2: Eye Scan</h3>
+        <img src="./assests/eye_scan.gif" alt="Eye Scan Animation" class="animation-img">
+        <button onclick="completeStep('step2')">Complete Step 2</button>
+    </div>
+
+    <div id="step3" class="step">
+        <h3>Step 3: Voice Recognition</h3>
+        <img src="./assests/voice.gif" alt="Voice Recognition Animation" class="animation-img">
+        <button onclick="completeStep('step3')">Complete Step 3</button>
+    </div>
+
+    <div id="step4" class="step">
+        <h3>Step 4: Enter Mobile Number</h3>
+        <img src="./assests/mobile_no.gif" alt="Eye Scan Animation" class="animation-img">
+        <input type="number" id="mobileNumber" placeholder="Enter Mobile Number">
+        <input type="number" id="otp" placeholder="Enter OTP" maxlength="6">
+        <button onclick="completeStep('step4')">Complete Step 4</button>
+    </div>
+
+    <div id="step5" class="step">
+        <h3>Step 5: Password</h3>
+        <img src="./assests/password.gif" alt="Eye Scan Animation" class="animation-img">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="completeStep('step5')">Complete Step 5</button>
+    </div>
+
+    <div id="step6" class="step">
+        <h3>Step 6: Confirm Password</h3>
+        <img src="./assests/confirm_password.gif" alt="Eye Scan Animation" class="animation-img">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <button onclick="completeStep('step6')">Complete Step 6</button>
+    </div>
+
+    <div id="step7" class="step">
+        <h3>Step 7: Enter Registered Email</h3>
+        <img src="./assests/email_verification.gif" alt="Eye Scan Animation" class="animation-img">
+        <input type="email" id="email" placeholder="Enter Registered Email">
+        <button onclick="completeStep('step7')">Complete Step 7</button>
+    </div>
+
+    <div id="status" class="status">
+        <h2>Status: <span id="statusText">Awaiting action...</span></h2>
+    </div>
+
+    <div class="instructions">
+        <p>All steps must be completed successfully to open the locker.</p>
+    </div>
+</div>
+
+<script>
+    // Web Speech API Initialization
+    let recognition;
+    const statusText = document.getElementById("statusText");
+
+    function speak(text) {
+        const speech = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(speech);
+    }
+
+    // Step Completion Handler
+    function completeStep(step) {
+        const stepElement = document.getElementById(step);
+        stepElement.classList.add("success");
+        stepElement.classList.remove("error");
+        statusText.textContent = step + " Completed!";
+        speak(step + " completed, moving to the next step.");
+
+        if (step === 'step1') {
+            stepElement.innerHTML = '<h3>Step 1 Completed</h3><p>Fingerprint Recognition complete!</p>';
+            moveToNextStep('step2');
+        } else if (step === 'step2') {
+            stepElement.innerHTML = '<h3>Step 2 Completed</h3><p>Eye Scan complete!</p>';
+            moveToNextStep('step3');
+        } else if (step === 'step3') {
+            stepElement.innerHTML = '<h3>Step 3 Completed</h3><p>Voice Recognition complete!</p>';
+            moveToNextStep('step4');
+        } else if (step === 'step4') {
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const otp = document.getElementById('otp').value;
+            if (mobileNumber && otp.length === 6) {
+                stepElement.innerHTML = '<h3>Step 4 Completed</h3><p>OTP verified!</p>';
+                moveToNextStep('step5');
+            } else {
+                stepElement.classList.add("error");
+                statusText.textContent = "Error in OTP or mobile number!";
+                speak("Error in OTP or mobile number.");
+            }
+        } else if (step === 'step5') {
+            const password = document.getElementById('password').value;
+            if (password.length >= 8) {
+                stepElement.innerHTML = '<h3>Step 5 Completed</h3><p>Password set successfully!</p>';
+                moveToNextStep('step6');
+            } else {
+                stepElement.classList.add("error");
+                statusText.textContent = "Password must be at least 8 characters!";
+                speak("Password must be at least 8 characters.");
+            }
+        } else if (step === 'step6') {
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const password = document.getElementById('password').value;
+            if (confirmPassword === password) {
+                stepElement.innerHTML = '<h3>Step 6 Completed</h3><p>Password confirmed!</p>';
+                moveToNextStep('step7');
+            } else {
+                stepElement.classList.add("error");
+                statusText.textContent = "Passwords do not match!";
+                speak("Passwords do not match.");
+            }
+        } else if (step === 'step7') {
+            const email = document.getElementById('email').value;
+            if (validateEmail(email)) {
+                stepElement.innerHTML = '<h3>Step 7 Completed</h3><p>Email verified!</p>';
+                statusText.textContent = "Locker Unlocked!";
+                speak("All steps complete. Locker unlocked.");
+                setTimeout(closeLocker, 60000); // Close after 1 minute
+            } else {
+                stepElement.classList.add("error");
+                statusText.textContent = "Invalid email address!";
+                speak("Invalid email address.");
+            }
+        }
+    }
+
+    function moveToNextStep(nextStep) {
+        const nextStepElement = document.getElementById(nextStep);
+        nextStepElement.style.display = "block";
+    }
+
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(email);
+    }
+
+    function closeLocker() {
+        alert("Locker will automatically close now.");
+    }
+
+    // Start speaking instruction when page loads
+    window.onload = function () {
+        speak("Welcome to the Highly Secure Personal Locker. Please follow the steps to open the locker.");
+    }
+</script>
+<!--start Footer -->
+<div class="footer">
+    <div class="heading">
+        <h2>SUSTAINABILITY STARTUP<sup>™</sup></h2>
+    </div>
+    <div class="content">
+        <div class="services">
+            <h4>Services</h4>
+            <p><a href="#">SUSTAINABILITY STARTUP VIDEOS</a></p>
+            <p><a href="#">SUSTAINABILITY STARTUP IMAGES</a></p>
+            
+        </div>
+        <div class="social-media">
+            <h4>Social</h4>
+            <p><a href="https://in.linkedin.com/"><i class="fab fa-linkedin"></i> Linkedin</a></p>
+            <p><a href="https://x.com/i/flow/login"><i class="fab fa-twitter"></i> X</a></p>
+            <p><a href="https://github.com/"><i class="fab fa-github"></i> Github</a></p>
+            <p><a href="https://www.facebook.com/codewithfaraz"><i class="fab fa-facebook"></i> Facebook</a></p>
+            <p><a href="https://www.instagram.com/codewithfaraz"><i class="fab fa-instagram"></i> Instagram</a>
+            </p>
+        </div>
+        <div class="links">
+            <h4>Quick links</h4>
+            <p><a href="#">HOME PAGE</a></p>
+            <p><a href="#">ABOUT US</a></p>
+            <p><a href="#">CONTACT US</a></p>
+            <!-- <p><a href="services.html">SERVICES</a></p> -->
+        </div>
+        <div class="details">
+            <h4 class="address">ADDRESS:</h4>
+            <p>H.NO: 6-2-125,<br /> IT HUB NIZAMABAD,<br /> BESIDE COLLECTOR OFFICE,<br /> BYPASS ROAD,<br />
+                NEAR G.G. COLLEGE,<br /> NIZAMABAD, TELANGANA STATE,<br /> INDIA, PIN CODE: 503001</p>
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <div class="footer-text">
+            (C) All rights reserved 2024. </br> Designed and developed by MAHESHWER_CHOWDEYKARI  . </br> Sustainability Startup, IT Hub, Nizamabad.                </div>
+        <hr />
+    </footer>
+</div>
+<script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
+</body>
+</html>
